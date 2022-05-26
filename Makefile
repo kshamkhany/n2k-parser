@@ -32,11 +32,11 @@ $(BUILD_DIR)/%.o: %.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 	
 $(TARGET):	 $(BUILD_DIR) $(OBJS)
-	$(CXX) -o $@ $(OBJS) $(LIBS)
-	cp ./n2k ~/defuzzy/n2k/.
+	$(CXX) -o $(BUILD_DIR)/bin/$@ $(OBJS) $(LIBS)
 	
 $(BUILD_DIR):
 	mkdir $@
+	mkdir $@/bin
 
 all: $(TARGET)
 
