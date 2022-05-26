@@ -31,7 +31,8 @@ Definition for NMEA2000 message class used in my NMEA2000 libraries.
 #include "N2kDef.h"
 #include <stdint.h>
 
-const double   N2kDoubleNA=-1e9;
+//const double   N2kDoubleNA=-1e9;
+const double   N2kDoubleNA=0;
 const uint8_t  N2kUInt8NA=0xff;
 const int8_t   N2kInt8NA=0x7f;
 const uint16_t N2kUInt16NA=0xffff;

@@ -516,7 +516,7 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
     N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,1);
 }
 
-bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
+bool ParseN2kPGN127507(const tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
                      tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
                      tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
   if (N2kMsg.PGN!=127507UL) return false;
@@ -741,6 +741,21 @@ bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingRef
   return true;
 }
 
+bool ParseN2kPGN129028(const tN2kMsg &N2kMsg, unsigned char &SID, double &TimeDelta, uint8_t &GNSSQuality, uint8_t &Direction, double &COG, double &AltitudeDelta) {
+  if (N2kMsg.PGN!=129028L) return false;
+  int Index=0;
+  unsigned char b;
+
+  SID=N2kMsg.GetByte(Index);
+  TimeDelta=N2kMsg.Get2ByteUDouble(0.01,Index);
+  b=N2kMsg.GetByte(Index); GNSSQuality=b; Direction=b;
+  COG=N2kMsg.Get2ByteUDouble(0.00001,Index);
+  AltitudeDelta=N2kMsg.Get2ByteUDouble(0.01,Index);
+
+  return true;
+}
+
+
 //*****************************************************************************
 // GNSS Position Data
 void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight,
@@ -842,7 +857,7 @@ void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode Desired
     N2kMsg.Add2ByteDouble(TDOP, 0.01);
 }
 
-bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+bool ParseN2kPGN129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
                        double& HDOP, double& VDOP, double& TDOP)
 {
     if(N2kMsg.PGN != 129539L)
